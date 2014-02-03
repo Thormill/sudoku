@@ -8,13 +8,20 @@ function Sudoku(n) {
   this.n = n;
   // base_grid - матрица, сгенерированная по правилам судоку
   this.build_base_grid();
-
-  // table - base_grid, подвергшийся математическим изменениям
+  // table - base_grid, подвергшийся математическим изменениям.
   this.table = this.base_grid;
 
   this.amount = 10; // количество операций перетасовки
+  // рандомные перетасовки матрицы amount раз
+  this.mix();
 
-  // radnomizing magic
+  // solution - ответ на задачу. в идеале должен быть private- членом класса
+  this.solution = this.table; // храним решение
+
+  // сложность алгоритма, по умолчанию равна количеству элементов
+  this.difficult = 1;
+
+  this.brute_perform();
 }
 
 // генерация базовой сетки по правилам судоку
@@ -124,35 +131,37 @@ Sudoku.prototype.mix = function() {
   }
 }
 
-// функция для удаления элементов
-Sudoku.prototype.perform = function() {
+// функция удаления клеток. не учитывает количество решений, как следствие - может родиться нерешаемое судоку
+Sudoku.prototype.brute_perform = function() {
+  // Всего в Судоку 81 клетка, обычно считают лёгким когда на поле есть 30-35 «подсказок», средним — 25-30, и сложным — 20-25.
+  var amount;
+  switch(this.difficult) {
+    case 1:
+      amount = get_random((this.n * 10), (this.n * 12));
+      break
+    case 2:
+      amount = get_random((this.n * 8), (this.n * 10));
+      break
+    case 3:
+      amount = get_random((this.n * 7), (this.n * 8));
+      break
+  }
 
+  var deleted = 0;
+  while(deleted < amount) {
+    var i = get_random(0, Math.pow(this.n, 2) - 1);
+    var j = get_random(0, Math.pow(this.n, 2) - 1);
+
+    while(parseInt(this.table[i][j]) == 0) {
+      var i = get_random(0, Math.pow(this.n, 2) - 1);
+      var j = get_random(0, Math.pow(this.n, 2) - 1);
+    }
+
+    this.table[i][j] = 0;
+    deleted++;
+  }
 }
-// flook = [[0 for j in range(example.n*example.n)] for i in range(example.n*example.n)]
-// iterator = 0
-// difficult = example.n ** 4 #Первоначально все элементы на месте
 
-// while iterator < example.n ** 4:
-//     i,j = random.randrange(0, example.n*example.n ,1), random.randrange(0, example.n*example.n ,1) # Выбираем случайную ячейку
-//     if flook[i][j] == 0:  #Если её не смотрели
-//         iterator += 1
-//         flook[i][j] = 1   #Посмотрим
-
-//         temp = example.table[i][j]  #Сохраним элемент на случай если без него нет решения или их слишком много
-//         example.table[i][j] = 0
-//         difficult -= 1 #Усложняем, если убрали элемент
-
-//         table_solution = []
-//         for copy_i in range(0, example.n*example.n):
-//             table_solution.append(example.table[copy_i][:]) #Скопируем в отдельный список
-
-//         i_solution = 0
-//         for solution in solver.solve_sudoku((example.n, example.n), table_solution):
-//             i_solution += 1 #Считаем количество решений
-
-//         if i_solution != 1: #Если решение не одинственное -- вернуть всё обратно
-//             example.table[i][j] = temp
-//             difficult += 1  #Облегчаем
-
-// example.show()
-// print "difficult = ",difficult
+Sudoku.prototype.check = function() {
+  return this.solution == this.table;
+}

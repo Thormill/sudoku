@@ -7,7 +7,27 @@
       border: solid 1px #333;
       width: 10px;
       height: 10px;
+      text-align: center;
+    }
+
+    #sudoku tr td span {
       padding: 5px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .editable input {
+      width: 24px;
+      height: 18px;
+    }
+    .editable:hover {
+      cursor: pointer;
+    }
+
+    .fixed {
+      font-weight: bold;
     }
   </style>
 </head>
@@ -17,28 +37,31 @@
   <table id="sudoku"></table>
 
   <script type="text/javascript">
-    $(document).ready(function(){
-      table = $('#sudoku');
-      var sudoku = new Sudoku(3);
-      sudoku.mix();
-      grid = sudoku.table;
+    var sudoku = new Sudoku(3);
 
+    $(document).ready(function(){
+      var table = $('#sudoku');
       var sHtml = '';
 
-      $.each(grid, function( index, row ) {
+      $.each(sudoku.table, function( i, row ) {
         sHtml += '<tr>';
-        $.each(row, function( index, elem ) {
+        $.each(row, function( j, elem ) {
           if(parseInt(elem) > 0) {
-            sHtml += '<td class="fixed">' + elem + '</td>';
+            sHtml += '<td class="fixed" data-row="' + i + '" data-col="' + j + '">' + elem + '</td>';
           }
           else {
-            sHtml += '<td class="editable">&nbsp;</td>';
+            sHtml += '<td class="editable" data-row="' + i + '" data-col="' + j + '"><input type="text" class="hidden" /><span>&nbsp;<span></td>';
           }
         });
         sHtml += '</tr>';
       });
 
       $(table).html(sHtml);
+
+      $('.editable').click(function(){
+        $(this).children('input').removeClass('hidden');
+        $(this).children('span').addClass('hidden');
+      });
     });
   </script>
 </body>
