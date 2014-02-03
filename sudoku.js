@@ -1,3 +1,9 @@
+function get_random(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+
 function Sudoku(n) {
   this.n = n;
   // base_grid - матрица, сгенерированная по правилам судоку
@@ -36,4 +42,31 @@ Sudoku.prototype.transponate = function() {
     }
 
   this.table = table;
+};
+
+// перестановка строк в пределах одного района
+Sudoku.prototype.swap_rows_small = function() {
+  // берем рандомную строку
+  area = get_random(0, this.n - 1);
+  line1 = get_random(0, this.n - 1);
+  // получение случайного района и случайной строки
+  N1 = area * this.n + line1 // номер 1 строки для обмена
+
+  line2 = get_random(0, this.n - 1);
+  while (line1 == line2) {
+    line2 = get_random(0, this.n - 1);
+  }
+
+  N2 = area * this.n + line2 // номер 2 строки для обмена
+
+  var tmp = this.table[N1];
+  this.table[N1] = this.table[N2];
+  this.table[N2] = tmp;
+};
+
+// перестановка столбцов в пределах одного района
+Sudoku.prototype.swap_cols_small = function() {
+  this.transponate();
+  this.swap_rows_small();
+  this.transponate();
 };
