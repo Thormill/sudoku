@@ -4,7 +4,7 @@ function get_random(min, max) {
 
 function IsNumeric(input)
 {
-    return (input - 0) == input && (''+input).replace(/^\s+|\s+$/g, "").length > 0;
+  return (input - 0) == input && (''+input).replace(/^\s+|\s+$/g, "").length > 0;
 }
 
 
@@ -18,12 +18,15 @@ function Sudoku(n) {
   this.mix();
 
   // solution - ответ на задачу. в идеале должен быть private- членом класса
-  this.solution = this.table; // храним решение
+  // сложность в том, что нельзя написать this.solution = this.table - если так сделать, то в solution будет храниться адрес table
+  // и изменения в table тут же будут отображаться в solution
+  this.store_solution(); // храним решение
 
   // сложность алгоритма, по умолчанию равна количеству элементов
   this.difficult = 1;
 
   this.brute_perform();
+  console.log(this.solution)
 }
 
 // генерация базовой сетки по правилам судоку
@@ -133,6 +136,20 @@ Sudoku.prototype.mix = function() {
   }
 }
 
+Sudoku.prototype.store_solution = function() {
+  var table = [];
+  for(var i = 0; i < this.n * this.n; i++) {
+    var row = []
+
+    for(var j = 0; j < this.n * this.n; j++) {
+      row.push(this.table[i][j]);
+    }
+    table.push(row);
+  }
+
+  this.solution = table;
+}
+
 // функция удаления клеток. не учитывает количество решений, как следствие - может родиться нерешаемое судоку
 Sudoku.prototype.brute_perform = function() {
   // Всего в Судоку 81 клетка, обычно считают лёгким когда на поле есть 30-35 «подсказок», средним — 25-30, и сложным — 20-25.
@@ -165,5 +182,12 @@ Sudoku.prototype.brute_perform = function() {
 }
 
 Sudoku.prototype.check = function() {
-  return this.solution == this.table;
+  for(var i = 0; i < this.n * this.n; i++) {
+    for(var j = 0; j < this.n * this.n; j++) {
+      if(this.solution[i][j] != this.table[i][j]) {
+        return false
+      }
+    }
+  }
+  return true
 }

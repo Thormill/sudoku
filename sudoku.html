@@ -81,7 +81,7 @@
         $(parent).children('span').removeClass('hidden');
 
         sudoku.table[$(parent).data("row")][$(parent).data("col")] = value;
-        if(sudoku.check()) {
+        if(sudoku.check() == true) {
           alert('Победа')
         }
       });
