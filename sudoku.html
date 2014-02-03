@@ -18,6 +18,9 @@
       display: none;
     }
 
+    .editable span {
+      color: #bebebe;
+    }
     .editable input {
       width: 24px;
       height: 18px;
@@ -61,7 +64,29 @@
       $('.editable').click(function(){
         $(this).children('input').removeClass('hidden');
         $(this).children('span').addClass('hidden');
+        $(this).children('input').focus();
       });
+
+      $('.editable input').blur(function(){
+        var parent = $(this).parent();
+        var value = $(parent).children('input').val();
+        // только цифры
+        if(!IsNumeric(value)) {
+          value = 0;
+          $(parent).children('input').val(0)
+        }
+
+        $(parent).children('input').addClass('hidden');
+        $(parent).children('span').html(value);
+        $(parent).children('span').removeClass('hidden');
+
+        sudoku.table[$(parent).data("row")][$(parent).data("col")] = value;
+        if(sudoku.check()) {
+          alert('Победа')
+        }
+      });
+
+
     });
   </script>
 </body>

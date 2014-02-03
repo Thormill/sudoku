@@ -2,14 +2,16 @@ function get_random(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function IsNumeric(input)
+{
+    return (input - 0) == input && (''+input).replace(/^\s+|\s+$/g, "").length > 0;
+}
 
 
 function Sudoku(n) {
   this.n = n;
-  // base_grid - матрица, сгенерированная по правилам судоку
+  // матрица, сгенерированная по правилам судоку
   this.build_base_grid();
-  // table - base_grid, подвергшийся математическим изменениям.
-  this.table = this.base_grid;
 
   this.amount = 10; // количество операций перетасовки
   // рандомные перетасовки матрицы amount раз
@@ -36,7 +38,7 @@ Sudoku.prototype.build_base_grid = function() {
     table.push(row);
   }
 
-  this.base_grid = table;
+  this.table = table;
 };
 
 // транспонация матрицы (поворот на 90deg)
