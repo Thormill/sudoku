@@ -1,0 +1,40 @@
+<html lang='ru'>
+<head>
+  <script src='sudoku.js'></script>
+  <script src='http://code.jquery.com/jquery-2.1.0.js'></script>
+  <style>
+    #sudoku tr td {
+      border: solid 1px #333;
+      width: 10px;
+      height: 10px;
+      padding: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Онлайн-генератор судоку</h1>
+  <table id="sudoku"></table>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      table = $('#sudoku');
+      var sudoku = new Sudoku(3);
+      // sudoku.build_base_grid();
+      grid = sudoku.base_grid;
+
+      var sHtml = '';
+
+      $.each(grid, function( index, row ) {
+        sHtml += '<tr>';
+        $.each(row, function( index, elem ) {
+          sHtml += '<td>' + elem + '</td>';
+        });
+        sHtml += '</tr>';
+      });
+
+      $(table).html(sHtml);
+    });
+  </script>
+</body>
+</html>
