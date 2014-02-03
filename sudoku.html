@@ -20,15 +20,20 @@
     $(document).ready(function(){
       table = $('#sudoku');
       var sudoku = new Sudoku(3);
-      // sudoku.build_base_grid();
-      grid = sudoku.base_grid;
+      sudoku.transponate();
+      grid = sudoku.table;
 
       var sHtml = '';
 
       $.each(grid, function( index, row ) {
         sHtml += '<tr>';
         $.each(row, function( index, elem ) {
-          sHtml += '<td>' + elem + '</td>';
+          if(parseInt(elem) > 0) {
+            sHtml += '<td class="fixed">' + elem + '</td>';
+          }
+          else {
+            sHtml += '<td class="editable">&nbsp;</td>';
+          }
         });
         sHtml += '</tr>';
       });

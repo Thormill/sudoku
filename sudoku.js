@@ -1,9 +1,12 @@
 function Sudoku(n) {
   this.n = n;
+  // base_grid - матрица, сгенерированная по правилам судоку
   this.build_base_grid();
 
-  // this.base_grid = [];
-  // this.table = [];
+  // table - base_grid, подвергшийся математическим изменениям
+  this.table = this.base_grid;
+
+  // radnomizing magic
 }
 
 // генерация базовой сетки по правилам судоку
@@ -21,17 +24,16 @@ Sudoku.prototype.build_base_grid = function() {
   this.base_grid = table;
 };
 
-// Animal.prototype.transpanate = function() {
-//   this.speed = 0;
-//   alert(this.name + ' стоит');
-// };
+// транспонация матрицы (поворот на 90deg)
+Sudoku.prototype.transponate = function() {
+  var table = this.table;
 
-// // свойство speed со значением "по умолчанию"
-// Animal.prototype.speed = 0;
+  for(var i = 0; i < table.length - 1; i++)
+    for(var j = i + 1; j < table.length; j++){
+      table[i][j] = table[i][j] - table[j][i];
+      table[j][i] = table[i][j] + table[j][i];
+      table[i][j] = table[j][i] - table[i][j];
+    }
 
-// var animal = new Animal('Зверь');
-
-// alert(animal.speed);               // 0, свойство взято из прототипа
-// animal.run(5);                     // Зверь бежит, скорость 5
-// animal.run(5);                     // Зверь бежит, скорость 10
-// animal.stop();                     // Зверь стоит
+  this.table = table;
+};
