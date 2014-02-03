@@ -12,6 +12,8 @@ function Sudoku(n) {
   // table - base_grid, подвергшийся математическим изменениям
   this.table = this.base_grid;
 
+  this.amount = 10; // количество операций перетасовки
+
   // radnomizing magic
 }
 
@@ -70,3 +72,87 @@ Sudoku.prototype.swap_cols_small = function() {
   this.swap_rows_small();
   this.transponate();
 };
+
+
+// поменять местами два района по горизонтали
+Sudoku.prototype.swap_rows_area = function() {
+  // #получение случайного района
+  area1 = get_random(0, this.n - 1);
+  area2 = get_random(0, this.n - 1);
+  while (area1 == area2) {
+    area2 = get_random(0, this.n - 1);
+  }
+
+  for(var i = 0; i < this.n; i++) {
+    N1 = area1 * this.n + i;
+    N2 = area2 * this.n + i;
+
+    var tmp = this.table[N1]
+    this.table[N1] = this.table[N2];
+    this.table[N2]= tmp;
+  }
+};
+
+// поменять местами два района по вертикали
+Sudoku.prototype.swap_cols_area = function() {
+  this.transponate();
+  this.swap_rows_area();
+  this.transponate();
+};
+
+// функция перетасовки матрицы
+Sudoku.prototype.mix = function() {
+  var amount = this.amount;
+  for(var i = 0; i < this.amount; i++) {
+    switch(get_random(1, 5)) {
+      case 1:
+        this.transponate();
+        break
+      case 2:
+        this.swap_rows_small();
+        break
+      case 3:
+        this.swap_cols_small();
+        break
+      case 4:
+        this.swap_rows_area();
+        break
+      case 5:
+        this.swap_cols_area();
+        break
+    }
+  }
+}
+
+// функция для удаления элементов
+Sudoku.prototype.perform = function() {
+
+}
+// flook = [[0 for j in range(example.n*example.n)] for i in range(example.n*example.n)]
+// iterator = 0
+// difficult = example.n ** 4 #Первоначально все элементы на месте
+
+// while iterator < example.n ** 4:
+//     i,j = random.randrange(0, example.n*example.n ,1), random.randrange(0, example.n*example.n ,1) # Выбираем случайную ячейку
+//     if flook[i][j] == 0:  #Если её не смотрели
+//         iterator += 1
+//         flook[i][j] = 1   #Посмотрим
+
+//         temp = example.table[i][j]  #Сохраним элемент на случай если без него нет решения или их слишком много
+//         example.table[i][j] = 0
+//         difficult -= 1 #Усложняем, если убрали элемент
+
+//         table_solution = []
+//         for copy_i in range(0, example.n*example.n):
+//             table_solution.append(example.table[copy_i][:]) #Скопируем в отдельный список
+
+//         i_solution = 0
+//         for solution in solver.solve_sudoku((example.n, example.n), table_solution):
+//             i_solution += 1 #Считаем количество решений
+
+//         if i_solution != 1: #Если решение не одинственное -- вернуть всё обратно
+//             example.table[i][j] = temp
+//             difficult += 1  #Облегчаем
+
+// example.show()
+// print "difficult = ",difficult

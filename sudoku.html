@@ -20,7 +20,7 @@
     $(document).ready(function(){
       table = $('#sudoku');
       var sudoku = new Sudoku(3);
-      sudoku.swap_cols_small();
+      sudoku.mix();
       grid = sudoku.table;
 
       var sHtml = '';
