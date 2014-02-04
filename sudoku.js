@@ -15,7 +15,7 @@ function Sudoku(n, difficult) {
   this.difficult = difficult;
 
   // количество операций перетасовки
-  this.amount = 10;
+  this.amount = get_random(10, 30);
 
   // для использования указателя на объект класса внутри private-методов
   var that = this;
