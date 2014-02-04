@@ -1,0 +1,43 @@
+#sudoku tr td {
+  border: solid 1px #333;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+}
+#sudoku tr td span {
+  padding: 5px;
+}
+.hidden {
+  display: none;
+}
+
+.editable span {
+  color: #333;
+}
+.editable input {
+  width: 24px;
+  height: 18px;
+}
+.editable:hover {
+  cursor: pointer;
+}
+
+.fixed {
+  background-color: #bebebe;
+  color: #fff;
+  text-shadow: 1px 1px 1px #333;
+}
+.fixed span{
+  font-weight: bold;
+  width: 24px;
+  height: 18px;
+}
+
+.center {
+  margin: 0 auto;
+  width: 275px;
+}
+
+h1 {
+  text-align: center;
+}
