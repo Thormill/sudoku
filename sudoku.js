@@ -8,7 +8,7 @@ function IsNumeric(input)
 }
 
 
-function Sudoku(n) {
+function Sudoku(n, difficult) {
   this.n = n;
   // матрица, сгенерированная по правилам судоку
   this.build_base_grid();
@@ -19,7 +19,7 @@ function Sudoku(n) {
 
 
   // сложность алгоритма, по умолчанию равна количеству элементов
-  this.difficult = 1;
+  this.difficult = difficult;
 
   // для использования указателя на объект класса внутри private-методов
   var that = this;

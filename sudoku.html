@@ -19,7 +19,7 @@
     }
 
     .editable span {
-      color: #bebebe;
+      color: #333;
     }
     .editable input {
       width: 24px;
@@ -29,25 +29,28 @@
       cursor: pointer;
     }
 
+    .fixed {
+      background-color: #bebebe;
+      color: #fff;
+      text-shadow: 1px 1px 1px #333;
+    }
     .fixed span{
       font-weight: bold;
       width: 24px;
       height: 18px;
-
-    }
-    .fixed {
-      background-color: #bebebe;
-      color: #fff;
     }
   </style>
 </head>
 
 <body>
   <h1>Онлайн-генератор судоку</h1>
+  <!-- В интернете полно алгоритмов генерации поля для судоку. При старте игры у пользователя спрашивается “сложность” и генерируется поле. У пользователя есть возможность вводить недостающие числа, а также перезаписывать уже введённые им(числа которые есть на старте возможности перезаписать нет). После выигрыша у пользователя спрашивается его имя. -->
+
+  <!-- После выигрыша у пользователя спрашивается его имя. На поле также выводится список игроков которые играли ранее, в списке показывается “сложность” и количество ходов до выигрыша. -->
   <table id="sudoku"></table>
 
   <script type="text/javascript">
-    var sudoku = new Sudoku(3);
+    var sudoku = new Sudoku(3, 1); // дефолтное судоку - 3 * 3 блока цифр, со стороной квадрата в 3 клетки
 
     $(document).ready(function(){
       var table = $('#sudoku');
