@@ -10,6 +10,7 @@ function IsNumeric(input)
 
 function Sudoku(n, difficult) {
   this.n = n;
+
   // сложность алгоритма
   this.difficult = difficult;
 
@@ -23,7 +24,7 @@ function Sudoku(n, difficult) {
   // что не даст пользователю возможность просмотреть решение через консоль браузера
   var solution = [];
 
-  // приватные методы
+  // ----------------приватные методы------------------------------------------------
 
   // генерация базовой сетки по правилам судоку
   var build_base_grid = function build_base_grid() {
@@ -71,10 +72,12 @@ function Sudoku(n, difficult) {
 
   // перестановка строк в пределах одного района
   var swap_rows_small = function swap_rows_small() {
-    // берем рандомную строку
+    // n - 1 потому что машина считает с 0, а n - количество. функция рандома включает его в промежуток,
+    // но если мы возьмем 3, то выдйем за границы массива
+
+    // получение случайного района и случайной строки
     area = get_random(0, that.n - 1);
     line1 = get_random(0, that.n - 1);
-    // получение случайного района и случайной строки
     N1 = area * that.n + line1 // номер 1 строки для обмена
 
     line2 = get_random(0, that.n - 1);
@@ -125,7 +128,6 @@ function Sudoku(n, difficult) {
 
   // функция перетасовки матрицы
   var mix = function mix() {
-    var amount = that.amount;
     for(var i = 0; i < that.amount; i++) {
       switch(get_random(1, 5)) {
         case 1:
@@ -150,7 +152,7 @@ function Sudoku(n, difficult) {
   // функция удаления клеток. не учитывает количество решений, как следствие - может родиться нерешаемое судоку
   var sudokize = function sudokize() {
     // Всего в Судоку 81 клетка, обычно считают лёгким когда на поле есть 30-35 «подсказок», средним — 25-30, и сложным — 20-25.
-    var amount;
+    var amount = 0;
     switch(that.difficult) {
       case 1:
         amount = get_random((that.n * 10), (that.n * 12));
@@ -181,7 +183,6 @@ function Sudoku(n, difficult) {
   // ----------------------------------------------------------------------------------
 
 
-
   // матрица, сгенерированная по правилам судоку
   build_base_grid();
 
@@ -191,7 +192,8 @@ function Sudoku(n, difficult) {
   // вызов приватного метода
   store_solution();
 
-  // функция проверки определяется в конструкторе и является привелигированной - имеет доступ к private-членам класса
+  // функция проверки определяется в конструкторе и является привелигированной -
+  // имеет доступ к private-членам класса, но доступна как public- метод
   this.check = function() {
     for(var i = 0; i < this.n * this.n; i++) {
       for(var j = 0; j < this.n * this.n; j++) {
