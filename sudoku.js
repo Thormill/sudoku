@@ -17,6 +17,9 @@ function Sudoku(n, difficult) {
   // количество операций перетасовки
   this.amount = get_random(10, 30);
 
+  // количество сделанных ходов
+  this.moves = 0;
+
   // для использования указателя на объект класса внутри private-методов
   var that = this;
 
@@ -166,7 +169,7 @@ function Sudoku(n, difficult) {
         break
     }
 
-    amount = 1;
+    // amount = 2; // для отладки победного сценария
 
     var deleted = 0;
     while(deleted < amount) {
@@ -185,14 +188,13 @@ function Sudoku(n, difficult) {
 
   // ----------------------------------------------------------------------------------
 
-
   // матрица, сгенерированная по правилам судоку
   build_base_grid();
 
   // рандомные перетасовки матрицы amount раз
   mix();
 
-  // вызов приватного метода
+  // сохраняем решение перед тем, как "наделать дырок" в нем
   store_solution();
 
   // функция проверки определяется в конструкторе и является привелигированной -
@@ -209,4 +211,10 @@ function Sudoku(n, difficult) {
   }
 
   sudokize();
+}
+
+// public-метод выставления значения
+Sudoku.prototype.move = function(i, j, value) {
+  this.table[i][j] = value;
+  this.moves++;
 }
