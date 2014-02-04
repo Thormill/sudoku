@@ -11,10 +11,13 @@
       height: 25px;
       text-align: center;
     }
-
     #sudoku tr td span {
       padding: 5px;
     }
+    #sudoku tr td[data-col="2"] {border-right-width: 3px}
+    #sudoku tr td[data-col="5"] {border-right-width: 3px}
+    #sudoku tr td[data-row="2"] {border-bottom-width: 3px}
+    #sudoku tr td[data-row="5"] {border-bottom-width: 3px}
 
     .hidden {
       display: none;
