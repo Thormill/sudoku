@@ -57,7 +57,7 @@ function Sudoku(n) {
     return true
   }
 
-  this.brute_perform();
+  this.sudokize();
 }
 
 // генерация базовой сетки по правилам судоку
@@ -168,7 +168,7 @@ Sudoku.prototype.mix = function() {
 }
 
 // функция удаления клеток. не учитывает количество решений, как следствие - может родиться нерешаемое судоку
-Sudoku.prototype.brute_perform = function() {
+Sudoku.prototype.sudokize = function() {
   // Всего в Судоку 81 клетка, обычно считают лёгким когда на поле есть 30-35 «подсказок», средним — 25-30, и сложным — 20-25.
   var amount;
   switch(this.difficult) {

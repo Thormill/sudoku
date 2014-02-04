@@ -5,8 +5,8 @@
   <style>
     #sudoku tr td {
       border: solid 1px #333;
-      width: 10px;
-      height: 10px;
+      width: 25px;
+      height: 25px;
       text-align: center;
     }
 
@@ -29,8 +29,15 @@
       cursor: pointer;
     }
 
-    .fixed {
+    .fixed span{
       font-weight: bold;
+      width: 24px;
+      height: 18px;
+
+    }
+    .fixed {
+      background-color: #bebebe;
+      color: #fff;
     }
   </style>
 </head>
@@ -50,7 +57,7 @@
         sHtml += '<tr>';
         $.each(row, function( j, elem ) {
           if(parseInt(elem) > 0) {
-            sHtml += '<td class="fixed" data-row="' + i + '" data-col="' + j + '">' + elem + '</td>';
+            sHtml += '<td class="fixed" data-row="' + i + '" data-col="' + j + '"><span>' + elem + '</span></td>';
           }
           else {
             sHtml += '<td class="editable" data-row="' + i + '" data-col="' + j + '"><input type="text" class="hidden" /><span>&nbsp;<span></td>';
