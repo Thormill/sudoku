@@ -70,11 +70,16 @@ $(document).ready(function(){
       $(parent).children('span').removeClass('hidden');
 
       sudoku.move($(parent).data("row"), $(parent).data("col"), value);
+
       if(sudoku.check() == true) {
         var name = prompt("Поздравляем, вы прошли sudoku за " + sudoku.moves + " ходов!\nКак нам вас увековечить в таблице рекордов?", "Anonymous");
 
         // $.post('/store', {"moves":sudoku.moves, "name":name, "difficulty":sudoku.difficult}).success(function(data){
-        //   data
+        //   $(data).each(function(){
+        //     sHtml = '';
+        //     sHtml += '<tr><td>' + this.name + '</td><td>' + this.difficulty + '</td><td>' + this.moves + '</td></tr>';
+        //     $('#leaders').append(sHtml);
+        //   });
         // });
       }
     });
