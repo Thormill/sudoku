@@ -72,7 +72,7 @@ $(document).ready(function(){
       sudoku.move($(parent).data("row"), $(parent).data("col"), value);
 
       if(sudoku.check() == true) {
-        var name = prompt("Поздравляем, вы прошли sudoku за " + sudoku.moves + " ходов!\nКак нам вас увековечить в таблице рекордов?", "Anonymous");
+        var name = prompt("Поздравляем, вы прошли sudoku за " + sudoku.count_moves() + " ходов!\nКак нам вас увековечить в таблице рекордов?", "Anonymous");
 
         // $.post('/store', {"moves":sudoku.moves, "name":name, "difficulty":sudoku.difficult}).success(function(data){
         //   $(data).each(function(){

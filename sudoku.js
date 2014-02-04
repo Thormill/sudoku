@@ -18,7 +18,7 @@ function Sudoku(n, difficult) {
   this.amount = get_random(10, 30);
 
   // количество сделанных ходов
-  this.moves = 0;
+  var moves = 0;
 
   // для использования указателя на объект класса внутри private-методов
   var that = this;
@@ -169,7 +169,7 @@ function Sudoku(n, difficult) {
         break
     }
 
-    // amount = 2; // для отладки победного сценария
+    amount = 2; // для отладки победного сценария
 
     var deleted = 0;
     while(deleted < amount) {
@@ -210,11 +210,19 @@ function Sudoku(n, difficult) {
     return true
   }
 
+  this.increment_moves = function() {
+    moves++;
+  }
+
+  this.count_moves = function() {
+    return moves;
+  }
+
   sudokize();
 }
 
 // public-метод выставления значения
 Sudoku.prototype.move = function(i, j, value) {
   this.table[i][j] = value;
-  this.moves++;
+  this.increment_moves();
 }
