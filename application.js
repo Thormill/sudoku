@@ -60,7 +60,7 @@ $(document).ready(function(){
       var parent = $(this).parent();
       var value = $(parent).children('input').val();
       // только цифры
-      if(!IsNumeric(value)) {
+      if(!IsNumeric(value) || parseInt(value) > 99) {
         value = 0;
         $(parent).children('input').val(0);
       }
