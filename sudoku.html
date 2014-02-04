@@ -14,11 +14,6 @@
     #sudoku tr td span {
       padding: 5px;
     }
-    #sudoku tr td[data-col="2"] {border-right-width: 3px}
-    #sudoku tr td[data-col="5"] {border-right-width: 3px}
-    #sudoku tr td[data-row="2"] {border-bottom-width: 3px}
-    #sudoku tr td[data-row="5"] {border-bottom-width: 3px}
-
     .hidden {
       display: none;
     }
@@ -58,6 +53,19 @@
 
 <body>
   <h1>Онлайн-генератор судоку</h1>
+  <form action="#" id="settings">
+    <label>Выберите размер поля</label>
+    <input type="radio" name="size" value="2">2x2</input>
+    <input type="radio" name="size" value="3" checked>3x3</input>
+    <input type="radio" name="size" value="4">4x4</input>
+
+    <label>Выберите сложность</label>
+    <input type="radio" name="difficulty" value="1">легкий</input>
+    <input type="radio" name="difficulty" value="2" checked>средний</input>
+    <input type="radio" name="difficulty" value="3">сложный</input>
+
+    <a href="#" id="generator">Сгенерировать</a>
+  </form>
   <!-- В интернете полно алгоритмов генерации поля для судоку. При старте игры у пользователя спрашивается “сложность” и генерируется поле. У пользователя есть возможность вводить недостающие числа, а также перезаписывать уже введённые им(числа которые есть на старте возможности перезаписать нет). После выигрыша у пользователя спрашивается его имя. -->
 
   <!-- После выигрыша у пользователя спрашивается его имя. На поле также выводится список игроков которые играли ранее, в списке показывается “сложность” и количество ходов до выигрыша. -->
@@ -66,26 +74,57 @@
   </div>
 
   <script type="text/javascript">
-    var sudoku = new Sudoku(3, 1); // дефолтное судоку - 3 * 3 блока цифр, со стороной квадрата в 3 клетки
-
     $(document).ready(function(){
-      var table = $('#sudoku');
-      var sHtml = '';
+      var sudoku;
 
-      $.each(sudoku.table, function( i, row ) {
-        sHtml += '<tr>';
-        $.each(row, function( j, elem ) {
-          if(parseInt(elem) > 0) {
-            sHtml += '<td class="fixed" data-row="' + i + '" data-col="' + j + '"><span>' + elem + '</span></td>';
-          }
-          else {
-            sHtml += '<td class="editable" data-row="' + i + '" data-col="' + j + '"><input type="text" class="hidden" /><span>&nbsp;<span></td>';
-          }
+      $('#generator').click(function(){
+        var size = $('#settings input[name="size"]:checked').val();
+        var difficulty = $('#settings input[name="difficulty"]:checked').val();
+
+        sudoku = new Sudoku(size, difficulty);
+
+        var table = $('#sudoku');
+        var sHtml = '';
+
+        $('#settings input').each(function(elem){
+          $(this).prop('disabled', true);
         });
-        sHtml += '</tr>';
-      });
 
-      $(table).html(sHtml);
+        $.each(sudoku.table, function( i, row ) {
+          sHtml += '<tr>';
+          $.each(row, function( j, elem ) {
+            if(parseInt(elem) > 0) {
+              sHtml += '<td class="fixed" data-row="' + i + '" data-col="' + j + '"><span>' + elem + '</span></td>';
+            }
+            else {
+              sHtml += '<td class="editable" data-row="' + i + '" data-col="' + j + '"><input type="text" class="hidden" /><span>&nbsp;<span></td>';
+            }
+          });
+          sHtml += '</tr>';
+        });
+
+        $(table).html(sHtml);
+
+        switch(parseInt(size)){
+          case 2:
+            $('#sudoku tr td[data-col="1"]').css('border-right-width', '3px');
+            $('#sudoku tr td[data-row="1"]').css('border-bottom-width', '3px');
+            break
+          case 3:
+            $('#sudoku tr td[data-col="2"]').css('border-right-width', '3px');
+            $('#sudoku tr td[data-col="5"]').css('border-right-width', '3px');
+            $('#sudoku tr td[data-row="2"]').css('border-bottom-width', '3px');
+            $('#sudoku tr td[data-row="5"]').css('border-bottom-width', '3px');
+            break
+          case 4:
+            $('#sudoku tr td[data-col="3"]').css('border-right-width', '3px');
+            $('#sudoku tr td[data-col="7"]').css('border-right-width', '3px');
+            $('#sudoku tr td[data-col="11"]').css('border-right-width', '3px');
+            $('#sudoku tr td[data-row="3"]').css('border-bottom-width', '3px');
+            $('#sudoku tr td[data-row="7"]').css('border-bottom-width', '3px');
+            $('#sudoku tr td[data-row="11"]').css('border-bottom-width', '3px');
+        }
+      });
 
       $('.editable').click(function(){
         $(this).children('input').removeClass('hidden');
@@ -99,7 +138,7 @@
         // только цифры
         if(!IsNumeric(value)) {
           value = 0;
-          $(parent).children('input').val(0)
+          $(parent).children('input').val(0);
         }
 
         $(parent).children('input').addClass('hidden');
@@ -108,11 +147,9 @@
 
         sudoku.table[$(parent).data("row")][$(parent).data("col")] = value;
         if(sudoku.check() == true) {
-          alert('Победа')
+          var years=prompt("Поздравляем, вы прошли sudoku!\nКак нам вас увековечить в таблице рекордов?", "Anonymous")
         }
       });
-
-
     });
   </script>
 </body>

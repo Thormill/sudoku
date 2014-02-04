@@ -9,10 +9,10 @@ function IsNumeric(input)
 
 
 function Sudoku(n, difficult) {
-  this.n = n;
+  this.n = parseInt(n);
 
   // сложность алгоритма
-  this.difficult = difficult;
+  this.difficult = parseInt(difficult);
 
   // количество операций перетасовки
   this.amount = get_random(10, 30);
@@ -29,7 +29,7 @@ function Sudoku(n, difficult) {
   // генерация базовой сетки по правилам судоку
   var build_base_grid = function build_base_grid() {
     var table = [];
-    for(var i = 0; i < that.n * that.n; i++) { // от 1 до 9
+    for(var i = 0; i < that.n * that.n; i++) {
       var row = []
 
       for(var j = 0; j < that.n * that.n; j++) {
@@ -151,17 +151,18 @@ function Sudoku(n, difficult) {
 
   // функция удаления клеток. не учитывает количество решений, как следствие - может родиться нерешаемое судоку
   var sudokize = function sudokize() {
-    // Всего в Судоку 81 клетка, обычно считают лёгким когда на поле есть 30-35 «подсказок», средним — 25-30, и сложным — 20-25.
     var amount = 0;
+    var total = Math.pow(that.n, 4);
+
     switch(that.difficult) {
       case 1:
-        amount = get_random((that.n * 10), (that.n * 12));
+        amount = Math.floor(total / 100 * 25); // надо заполнить 25%
         break
       case 2:
-        amount = get_random((that.n * 8), (that.n * 10));
+        amount = Math.floor(total / 100 * 35); // 35%
         break
       case 3:
-        amount = get_random((that.n * 7), (that.n * 8));
+        amount = Math.floor(total / 100 * 45); // 45%
         break
     }
 
