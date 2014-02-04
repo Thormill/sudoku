@@ -166,6 +166,8 @@ function Sudoku(n, difficult) {
         break
     }
 
+    amount = 1;
+
     var deleted = 0;
     while(deleted < amount) {
       var i = get_random(0, Math.pow(that.n, 2) - 1);
