@@ -33,15 +33,28 @@
   height: 18px;
 }
 
-.center {
+.container {
   margin: 0 auto;
-  width: 525px;
+  width: 275px;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+  right: 100;
+}
+.absolute {
+  position: absolute;
+}
+
+#records {
+  width: 300px;
+}
+#records tr {
+  border-bottom: 1px solid #333;
 }
 
 h1 {
   text-align: center;
-}
-
-#records {
-  width: 250px;
 }
