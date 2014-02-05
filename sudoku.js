@@ -169,7 +169,7 @@ function Sudoku(n, difficult) {
         break
     }
 
-    // amount = 2; // для отладки победного сценария
+    // amount = 1; // для отладки победного сценария
 
     var deleted = 0;
     while(deleted < amount) {

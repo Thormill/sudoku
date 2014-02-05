@@ -74,13 +74,15 @@ $(document).ready(function(){
       if(sudoku.check() == true) {
         var name = prompt("Поздравляем, вы прошли sudoku за " + sudoku.count_moves() + " ходов!\nКак нам вас увековечить в таблице рекордов?", "Anonymous");
 
-        // $.post('/store', {"moves":sudoku.moves, "name":name, "difficulty":sudoku.difficult}).success(function(data){
-        //   $(data).each(function(){
-        //     sHtml = '';
-        //     sHtml += '<tr><td>' + this.name + '</td><td>' + this.difficulty + '</td><td>' + this.moves + '</td></tr>';
-        //     $('#leaders').append(sHtml);
-        //   });
-        // });
+        $.post('http://sudoku.bl.ee/records.php', {"moves":sudoku.count_moves(), "name":name, "difficulty":sudoku.difficult}).success(function(data){
+          decoded_data = jQuery.parseJSON(data);
+          $(decoded_data).each(function(index, elem){
+            sHtml = '';
+            sHtml += '<tr><td>' + index + '</td><td>' + elem.name + '</td><td>' + elem.difficulty + '</td><td>' + elem.moves + '</td></tr>';
+            $('#records').append(sHtml);
+            $('#records').removeClass("hidden");
+          });
+        });
       }
     });
   });

@@ -35,9 +35,13 @@
 
 .center {
   margin: 0 auto;
-  width: 275px;
+  width: 525px;
 }
 
 h1 {
   text-align: center;
+}
+
+#records {
+  width: 250px;
 }
