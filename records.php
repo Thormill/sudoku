@@ -51,7 +51,8 @@ mysql_query("COMMIT");
 $query = sprintf("SELECT records.*, users.name
                     FROM records
                     INNER JOIN users ON users.id = records.user_id
-                    WHERE difficulty = %s",
+                    WHERE difficulty = %s
+                    ORDER BY moves ASC",
                 $difficulty);
 
 // Выполняем запрос

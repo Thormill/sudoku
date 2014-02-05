@@ -10,9 +10,9 @@ $(document).ready(function(){
     var table = $('#sudoku');
     var sHtml = '';
 
-    $('#settings input').each(function(elem){
-      $(this).prop('disabled', true);
-    });
+    // $('#settings input').each(function(elem){
+    //   $(this).prop('disabled', true);
+    // });
 
     $.each(sudoku.table, function( i, row ) {
       sHtml += '<tr>';
@@ -79,7 +79,7 @@ $(document).ready(function(){
           $(decoded_data).each(function(index, elem){
             sHtml = '';
             sHtml += '<tr><td>' + index + '</td><td>' + elem.name + '</td><td>' + elem.difficulty + '</td><td>' + elem.moves + '</td></tr>';
-            $('#records').append(sHtml);
+            $('#records tbody').html(sHtml);
             $('#records').removeClass("hidden");
           });
         });
