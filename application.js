@@ -76,12 +76,14 @@ $(document).ready(function(){
 
         $.post('http://sudoku.bl.ee/records.php', {"moves":sudoku.count_moves(), "name":name, "difficulty":sudoku.difficult}).success(function(data){
           decoded_data = jQuery.parseJSON(data);
+          var sTable = ''
           $(decoded_data).each(function(index, elem){
             sHtml = '';
             sHtml += '<tr><td>' + index + '</td><td>' + elem.name + '</td><td>' + elem.difficulty + '</td><td>' + elem.moves + '</td></tr>';
-            $('#records tbody').html(sHtml);
             $('#records').removeClass("hidden");
+            sTable += sHtml;
           });
+          $('#records tbody').html(sTable);
         });
       }
     });
