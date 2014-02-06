@@ -1,6 +1,6 @@
 <?php
 // если данных нет
-if(!isset($_POST['moves']) || !isset($_POST['name']) || !isset($_POST['difficulty'])) {
+if(!isset($_POST['moves']) || !isset($_POST['name']) || !isset($_POST['difficulty']) || !isset($_POST['size'])) {
   die('Not enough data');
 }
 
@@ -8,6 +8,7 @@ if(!isset($_POST['moves']) || !isset($_POST['name']) || !isset($_POST['difficult
 $moves = $_POST['moves'];
 $name = $_POST['name'];
 $difficulty = $_POST['difficulty'];
+$size = $_POST['size'];
 
 $settings = array(
     'host' => "mysql.hostinger.ru",
@@ -35,9 +36,9 @@ if (!$res) {
   die('Неверный запрос: ' . mysql_error());
 }
 
-$insert_record_query = sprintf("INSERT INTO records(user_id, moves, difficulty)
-                                  VALUES(%s, %s, %s)",
-                               mysql_insert_id(), $moves, $difficulty);
+$insert_record_query = sprintf("INSERT INTO records(user_id, moves, difficulty, size)
+                                  VALUES(%s, %s, %s, %s)",
+                               mysql_insert_id(), $moves, $difficulty, $size);
 $res = mysql_query($insert_record_query);
 if (!$res) {
   mysql_query("ROLLBACK");
@@ -52,8 +53,9 @@ $query = sprintf("SELECT records.*, users.name
                     FROM records
                     INNER JOIN users ON users.id = records.user_id
                     WHERE difficulty = %s
+                      AND size = %s
                     ORDER BY moves ASC",
-                $difficulty);
+                $difficulty, $size);
 
 // Выполняем запрос
 $result = mysql_query($query);
