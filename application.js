@@ -86,9 +86,14 @@ $(document).ready(function(){
       $(this).children('input').focus();
     });
 
+    $('.editable input').keyup(function(e){
+      this.value = this.value.replace(/[^0-9]/g, '');
+    });
+
     $('.editable input').blur(function(){
       var parent = $(this).parent();
       var value = $(parent).children('input').val();
+
       // только цифры
       if(!IsNumeric(value) || parseInt(value) > 99) {
         value = '';
