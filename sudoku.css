@@ -1,13 +1,13 @@
-#sudoku {
+#field {
   border-collapse: collapse;
 }
-#sudoku tr td {
+#field tr td {
   border: solid 1px #333;
   width: 25px;
   height: 25px;
   text-align: center;
 }
-#sudoku tr td span {
+#field tr td span {
   padding: 5px;
 }
 .hidden {

@@ -1,3 +1,5 @@
+var sudoku;
+
 function human_size(i) {
   var result = "";
   switch(parseInt(i)){
@@ -5,10 +7,10 @@ function human_size(i) {
       result = "2x2"
       break
     case 3:
-      result = "2x2"
+      result = "3x3"
       break
     case 4:
-      result = "2x2"
+      result = "4x4"
   }
   return result;
 }
@@ -29,15 +31,13 @@ function human_difficult(i) {
 }
 
 $(document).ready(function(){
-  var sudoku;
-
   $('#generator').click(function(){
     var size = $('#settings input[name="size"]:checked').val();
     var difficulty = $('#settings input[name="difficulty"]:checked').val();
 
     sudoku = new Sudoku(size, difficulty);
 
-    var table = $('#sudoku');
+    var table = $('#field');
     var sHtml = '';
 
     // $('#settings input').each(function(elem){
@@ -61,22 +61,22 @@ $(document).ready(function(){
 
     switch(parseInt(size)){
       case 2:
-        $('#sudoku tr td[data-col="1"]').css('border-right-width', '3px');
-        $('#sudoku tr td[data-row="1"]').css('border-bottom-width', '3px');
+        $('#field tr td[data-col="1"]').css('border-right-width', '3px');
+        $('#field tr td[data-row="1"]').css('border-bottom-width', '3px');
         break
       case 3:
-        $('#sudoku tr td[data-col="2"]').css('border-right-width', '3px');
-        $('#sudoku tr td[data-col="5"]').css('border-right-width', '3px');
-        $('#sudoku tr td[data-row="2"]').css('border-bottom-width', '3px');
-        $('#sudoku tr td[data-row="5"]').css('border-bottom-width', '3px');
+        $('#field tr td[data-col="2"]').css('border-right-width', '3px');
+        $('#field tr td[data-col="5"]').css('border-right-width', '3px');
+        $('#field tr td[data-row="2"]').css('border-bottom-width', '3px');
+        $('#field tr td[data-row="5"]').css('border-bottom-width', '3px');
         break
       case 4:
-        $('#sudoku tr td[data-col="3"]').css('border-right-width', '3px');
-        $('#sudoku tr td[data-col="7"]').css('border-right-width', '3px');
-        $('#sudoku tr td[data-col="11"]').css('border-right-width', '3px');
-        $('#sudoku tr td[data-row="3"]').css('border-bottom-width', '3px');
-        $('#sudoku tr td[data-row="7"]').css('border-bottom-width', '3px');
-        $('#sudoku tr td[data-row="11"]').css('border-bottom-width', '3px');
+        $('#field tr td[data-col="3"]').css('border-right-width', '3px');
+        $('#field tr td[data-col="7"]').css('border-right-width', '3px');
+        $('#field tr td[data-col="11"]').css('border-right-width', '3px');
+        $('#field tr td[data-row="3"]').css('border-bottom-width', '3px');
+        $('#field tr td[data-row="7"]').css('border-bottom-width', '3px');
+        $('#field tr td[data-row="11"]').css('border-bottom-width', '3px');
     }
 
 
